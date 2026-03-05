@@ -1,0 +1,116 @@
+.bg-light {
+    background-color: var(--surface);
+}
+
+.section-header {
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-top: 1rem;
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 1.125rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.service-card.highlight {
+    background: var(--primary);
+    color: white;
+    border: 1px solid var(--primary-light);
+    box-shadow: 0 20px 25px -5px rgba(10, 37, 64, 0.2);
+}
+
+.service-card.highlight .service-title {
+    color: white;
+}
+
+.service-card.highlight .service-desc,
+.service-card.highlight .service-features li span {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.service-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 1rem;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--secondary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.highlight .service-icon-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary);
+}
+
+.service-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.service-desc {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    /* Pushes features and button down */
+}
+
+.service-features {
+    list-style: none;
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.service-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.check-icon {
+    color: var(--secondary);
+    flex-shrink: 0;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.mt-auto {
+    margin-top: auto;
+}

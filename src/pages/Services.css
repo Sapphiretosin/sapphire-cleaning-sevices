@@ -1,0 +1,96 @@
+.services-page {
+    padding-top: 5rem;
+}
+
+.services-hero {
+    background: linear-gradient(to bottom, var(--surface), var(--bg));
+    padding: 6rem 0 4rem;
+}
+
+.detailed-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: -2rem;
+}
+
+.detailed-service-card {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-normal);
+    background: white;
+    border-radius: 1.5rem;
+}
+
+.detailed-service-card:hover {
+    transform: translateY(-8px);
+}
+
+.card-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.price-tag {
+    color: var(--secondary-dark);
+    font-weight: 700;
+    font-size: 1.125rem;
+}
+
+.service-full-desc {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.includes-section {
+    margin-bottom: 2.5rem;
+    flex-grow: 1;
+}
+
+.includes-section h4 {
+    font-size: 1.125rem;
+    color: var(--primary-light);
+    margin-bottom: 1rem;
+}
+
+.checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.check-icon {
+    margin-top: 0.2rem;
+    font-size: 1.25rem;
+}
+
+.text-secondary {
+    color: var(--secondary);
+}
+
+.card-actions {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+}
+
+.pb-section {
+    padding-bottom: 5rem;
+}
