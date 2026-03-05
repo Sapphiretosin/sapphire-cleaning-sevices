@@ -28,8 +28,8 @@ const Contact = () => {
 
     const [status, setStatus] = useState('idle'); // idle, submitting, success
 
-    // Service center location (example coordinates for "Clean City")
-    const position = [40.7128, -74.0060];
+    // Service center location: Ado Ekiti, Nigeria
+    const position = [7.65, 5.27];
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -110,7 +110,7 @@ const Contact = () => {
                             <div className="info-content">
                                 <h3>Visit Us</h3>
                                 <p>Visit our headquarters.</p>
-                                <span className="info-link">123 Sparkle Ave, Suite 100<br />Clean City, XX 12345</span>
+                                <span className="info-link">No 8, Ilokun Estate, opposite New Reality Christian centre,<br />Ado Ekiti, Nigeria</span>
                             </div>
                         </div>
                     </motion.div>
@@ -221,15 +221,15 @@ const Contact = () => {
                             <Marker position={position}>
                                 <Popup>
                                     <strong>Sapphire Cleaning HQ</strong> <br />
-                                    123 Sparkle Ave, Suite 100 <br />
-                                    Clean City, XX 12345
+                                    No 8, Ilokun Estate, <br />
+                                    Ado Ekiti, Nigeria
                                 </Popup>
                             </Marker>
                         </MapContainer>
                     </div>
                     <div className="map-overlay-info glass-panel-dark">
                         <h3>Our Service Area</h3>
-                        <p>We provide premium cleaning services across the entire metropolitan area including Clean City and surrounding suburbs.</p>
+                        <p>We provide premium cleaning services across Ado Ekiti and the surrounding regions in Nigeria.</p>
                         <div className="mt-4 flex gap-4">
                             <div className="badge">Residential</div>
                             <div className="badge">Commercial</div>
