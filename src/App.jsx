@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Services from './pages/Services';
 import Booking from './pages/Booking';
 import Contact from './pages/Contact';
+import Dashboard from './pages/Dashboard';
 import './index.css';
 
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/book" element={<Booking />} />
           </Routes>
         </main>
