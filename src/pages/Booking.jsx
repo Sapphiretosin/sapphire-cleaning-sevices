@@ -16,13 +16,37 @@ const Booking = () => {
         phone: '',
         address: ''
     });
+    const [errors, setErrors] = useState({});
+
+    const validateStep = (currentStep) => {
+        let newErrors = {};
+        if (currentStep === 1) {
+            if (!formData.serviceType) newErrors.serviceType = 'Please select a service type.';
+        } else if (currentStep === 2) {
+            if (!formData.date) newErrors.date = 'Date is required.';
+            if (!formData.time) newErrors.time = 'Time preference is required.';
+            if (!formData.name.trim()) newErrors.name = 'Full name is required.';
+            if (!formData.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) newErrors.email = 'Please enter a valid email.';
+            if (!formData.address.trim()) newErrors.address = 'Service address is required.';
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        // Clear error when user types
+        if (errors[name]) {
+            setErrors({ ...errors, [name]: '' });
+        }
     };
 
-    const nextStep = () => setStep(step + 1);
+    const nextStep = () => {
+        if (validateStep(step)) {
+            setStep(step + 1);
+        }
+    };
     const prevStep = () => setStep(step - 1);
 
     const submitBooking = (e) => {
@@ -80,12 +104,21 @@ const Booking = () => {
                                                 className="hidden-radio"
                                             />
                                             <span className="option-text">{service}</span>
-                                            {formData.serviceType === service && <FiCheckCircle className="check-icon text-secondary" />}
+                                            {formData.serviceType === service && (
+                                                <motion.div
+                                                    initial={{ scale: 0 }}
+                                                    animate={{ scale: 1 }}
+                                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                                >
+                                                    <FiCheckCircle className="check-icon" />
+                                                </motion.div>
+                                            )}
                                         </label>
                                     ))}
                                 </div>
+                                {errors.serviceType && <span className="error-text">{errors.serviceType}</span>}
 
-                                <h3 className="mb-4 mt-6">Size of your space?</h3>
+                                <h3 className="mb-4 mt-6">Size of your space??</h3>
                                 <div className="size-inputs">
                                     <div className="input-group">
                                         <label>Bedrooms</label>
@@ -130,15 +163,31 @@ const Booking = () => {
                                 <div className="datetime-inputs mb-6">
                                     <div className="input-group">
                                         <label>Date</label>
-                                        <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+                                        <input
+                                            type="date"
+                                            name="date"
+                                            value={formData.date}
+                                            onChange={handleInputChange}
+                                            className={errors.date ? 'input-error' : ''}
+                                            min={new Date().toISOString().split('T')[0]}
+                                            required
+                                        />
+                                        {errors.date && <span className="error-text">{errors.date}</span>}
                                     </div>
                                     <div className="input-group">
                                         <label>Time Preference</label>
-                                        <select name="time" value={formData.time} onChange={handleInputChange} required>
+                                        <select
+                                            name="time"
+                                            value={formData.time}
+                                            onChange={handleInputChange}
+                                            className={errors.time ? 'input-error' : ''}
+                                            required
+                                        >
                                             <option value="">Select a time</option>
                                             <option value="Morning (8AM - 12PM)">Morning (8AM - 12PM)</option>
                                             <option value="Afternoon (12PM - 4PM)">Afternoon (12PM - 4PM)</option>
                                         </select>
+                                        {errors.time && <span className="error-text">{errors.time}</span>}
                                     </div>
                                 </div>
 
@@ -146,15 +195,42 @@ const Booking = () => {
                                 <div className="contact-inputs">
                                     <div className="input-group">
                                         <label>Full Name</label>
-                                        <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="John Doe" required />
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            className={errors.name ? 'input-error' : ''}
+                                            placeholder="John Doe"
+                                            required
+                                        />
+                                        {errors.name && <span className="error-text">{errors.name}</span>}
                                     </div>
                                     <div className="input-group">
                                         <label>Email Address</label>
-                                        <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="john@example.com" required />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                            className={errors.email ? 'input-error' : ''}
+                                            placeholder="john@example.com"
+                                            required
+                                        />
+                                        {errors.email && <span className="error-text">{errors.email}</span>}
                                     </div>
                                     <div className="input-group full-width">
                                         <label>Service Address</label>
-                                        <input type="text" name="address" value={formData.address} onChange={handleInputChange} placeholder="123 Main St, Apt 4B" required />
+                                        <input
+                                            type="text"
+                                            name="address"
+                                            value={formData.address}
+                                            onChange={handleInputChange}
+                                            className={errors.address ? 'input-error' : ''}
+                                            placeholder="123 Main St, Apt 4B"
+                                            required
+                                        />
+                                        {errors.address && <span className="error-text">{errors.address}</span>}
                                     </div>
                                 </div>
 

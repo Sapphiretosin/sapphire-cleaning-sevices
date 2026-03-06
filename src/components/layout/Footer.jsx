@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiFacebook, FiTwitter, FiInstagram, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import { IoDiamondOutline } from 'react-icons/io5';
+import logo from '../../assets/logo.png';
 import './Footer.css';
 
 const Footer = () => {
@@ -10,8 +12,17 @@ const Footer = () => {
         <footer className="footer-section">
             <div className="container footer-container">
                 <div className="footer-brand">
-                    <Link to="/" className="nav-logo mb-4">
-                        <span className="text-gradient">Sapphire</span> Cleaning
+                    <Link to="/" className="nav-logo mb-6 flex items-center gap-4">
+                        <div className="logo-wrapper">
+                            <img
+                                src={logo}
+                                alt="Sapphire Sparks"
+                            />
+                        </div>
+                        <span className="brand-name flex flex-col leading-none">
+                            <span className="text-secondary font-bold text-3xl">Sapphire</span>
+                            <span className="text-white font-medium text-xs tracking-[0.3em] uppercase mt-1">Sparks</span>
+                        </span>
                     </Link>
                     <p className="text-muted mb-4">
                         Professional cleaning services tailored to your needs. We bring the sparkle back to your home and office with eco-friendly products and expert care.
@@ -37,7 +48,7 @@ const Footer = () => {
                 <div className="footer-links-group">
                     <h4 className="footer-heading">Company</h4>
                     <ul className="footer-links">
-                        <li><a href="#about">About Us</a></li>
+                        <li><Link to="/about">About Us</Link></li>
                         <li><a href="#careers">Careers</a></li>
                         <li><a href="#testimonials">Testimonials</a></li>
                         <li><a href="#faq">FAQ</a></li>
@@ -50,15 +61,15 @@ const Footer = () => {
                     <ul className="footer-contact">
                         <li>
                             <FiPhone className="contact-icon" />
-                            <span>+1 (555) 123-4567</span>
+                            <span>08101099961</span>
                         </li>
                         <li>
                             <FiMail className="contact-icon" />
-                            <span>hello@sapphirecleaning.com</span>
+                            <span>info@sapphiresparks.com</span>
                         </li>
                         <li>
                             <FiMapPin className="contact-icon" />
-                            <span>123 Sparkle Ave, Suite 100<br />Clean City, XX 12345</span>
+                            <span>Lagos, Nigeria</span>
                         </li>
                     </ul>
                 </div>
@@ -66,7 +77,7 @@ const Footer = () => {
 
             <div className="footer-bottom">
                 <div className="container">
-                    <p>&copy; {currentYear} Sapphire Cleaning Services. All rights reserved.</p>
+                    <p>&copy; {currentYear} Sapphire Sparks Cleaning & Facility Services. All rights reserved.</p>
                 </div>
             </div>
         </footer>

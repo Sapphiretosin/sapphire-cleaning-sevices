@@ -1,0 +1,22 @@
+.not-found-page {
+    padding-top: 5rem;
+    min-height: 80vh;
+}
+
+.not-found-content {
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 2rem;
+}
+
+.error-code {
+    font-size: 8rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .error-code {
+        font-size: 5rem;
+    }
+}

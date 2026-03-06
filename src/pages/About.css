@@ -1,0 +1,28 @@
+.about-page {
+    padding-top: 5rem;
+}
+
+.about-hero {
+    background: radial-gradient(circle at top right, rgba(0, 212, 255, 0.05), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(10, 37, 64, 0.03), transparent 40%);
+    padding: 8rem 0 4rem;
+}
+
+.about-content {
+    background: white;
+}
+
+.about-services {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.about-page .glass-panel {
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 6rem 0 3rem;
+    }
+}

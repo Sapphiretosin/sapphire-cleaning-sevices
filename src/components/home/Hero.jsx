@@ -48,7 +48,7 @@ const Hero = () => {
                     </motion.h1>
 
                     <motion.p variants={itemVariants} className="hero-subtitle">
-                        Experience the difference with Sapphire Cleaning. Professional, reliable, and tailored to your home or office needs. Let us do the dirty work.
+                        Experience the difference with Sapphire Sparks. Professional, reliable, and tailored to your home or office needs. Let us do the dirty work.
                     </motion.p>
 
                     <motion.div variants={itemVariants} className="hero-actions">

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { IoDiamondOutline } from 'react-icons/io5';
+import logo from '../../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -24,14 +26,24 @@ const Navbar = () => {
     return (
         <nav className={`navbar ${scrolled ? 'navbar-scrolled glass-panel' : ''}`}>
             <div className="container nav-container">
-                <Link to="/" className="nav-logo">
-                    <span className="text-gradient">Sapphire</span> Cleaning
+                <Link to="/" className="nav-logo flex items-center gap-3">
+                    <div className="logo-wrapper">
+                        <img
+                            src={logo}
+                            alt="Sapphire Sparks"
+                        />
+                    </div>
+                    <span className="brand-name flex flex-col leading-tight">
+                        <span className="text-gradient font-bold text-2xl">Sapphire</span>
+                        <span className="text-primary font-medium text-sm tracking-widest uppercase">Sparks</span>
+                    </span>
                 </Link>
 
                 {/* Desktop Menu */}
                 <div className="nav-links desktop-only">
                     <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
                     <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>Services</Link>
+                    <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
                     <a href="/#about">How it Works</a>
                     <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
                     <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active' : ''}>Dashboard</Link>
@@ -52,6 +64,7 @@ const Navbar = () => {
                 <div className="mobile-links">
                     <Link to="/">Home</Link>
                     <Link to="/services">Services</Link>
+                    <Link to="/about">About</Link>
                     <a href="/#about">How it Works</a>
                     <Link to="/contact">Contact</Link>
                     <Link to="/dashboard">Dashboard</Link>

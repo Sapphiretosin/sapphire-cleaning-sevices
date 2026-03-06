@@ -84,7 +84,7 @@ const ServicesOverview = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <div className="showcase-content">
-                        <h3 className="mb-4 text-2xl font-bold">The Sapphire Difference</h3>
+                        <h3 className="mb-4 text-2xl font-bold">The Sapphire Sparks Difference</h3>
                         <p className="text-muted mb-6">
                             We don't just clear the clutter; we deeply sanitize and polish every surface.
                             Our team arrives fully equipped with eco-friendly products and commercial-grade tools to ensure a flawless finish.

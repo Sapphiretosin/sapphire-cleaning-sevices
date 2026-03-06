@@ -144,9 +144,11 @@ const Contact = () => {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
+                                            className={errors.name ? 'input-error' : ''}
                                             placeholder="John Doe"
                                             required
                                         />
+                                        {errors.name && <span className="error-text">{errors.name}</span>}
                                     </div>
                                     <div className="input-group">
                                         <label htmlFor="email">Email Address</label>
@@ -156,9 +158,11 @@ const Contact = () => {
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
+                                            className={errors.email ? 'input-error' : ''}
                                             placeholder="john@example.com"
                                             required
                                         />
+                                        {errors.email && <span className="error-text">{errors.email}</span>}
                                     </div>
                                 </div>
 
@@ -170,9 +174,11 @@ const Contact = () => {
                                         name="subject"
                                         value={formData.subject}
                                         onChange={handleChange}
+                                        className={errors.subject ? 'input-error' : ''}
                                         placeholder="How can we help?"
                                         required
                                     />
+                                    {errors.subject && <span className="error-text">{errors.subject}</span>}
                                 </div>
 
                                 <div className="input-group full-width">
@@ -182,10 +188,12 @@ const Contact = () => {
                                         name="message"
                                         value={formData.message}
                                         onChange={handleChange}
+                                        className={errors.message ? 'input-error' : ''}
                                         placeholder="Tell us what you need..."
                                         rows="5"
                                         required
                                     ></textarea>
+                                    {errors.message && <span className="error-text">{errors.message}</span>}
                                 </div>
 
                                 <button
@@ -220,7 +228,7 @@ const Contact = () => {
                             />
                             <Marker position={position}>
                                 <Popup>
-                                    <strong>Sapphire Cleaning HQ</strong> <br />
+                                    <strong>Sapphire Sparks HQ</strong> <br />
                                     No 8, Ilokun Estate, <br />
                                     Ado Ekiti, Nigeria
                                 </Popup>

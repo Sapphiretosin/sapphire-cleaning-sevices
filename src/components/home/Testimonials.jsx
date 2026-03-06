@@ -8,7 +8,7 @@ const testimonialsData = [
         id: 1,
         name: "Sarah Jenkins",
         role: "Homeowner",
-        text: "Sapphire Cleaning Services completely transformed my house! Their attention to detail is unmatched. I love coming home to a spotless, fresh-smelling space every week.",
+        text: "Sapphire Sparks Cleaning Services completely transformed my house! Their attention to detail is unmatched. I love coming home to a spotless, fresh-smelling space every week.",
         rating: 5,
         avatar: "S"
     },

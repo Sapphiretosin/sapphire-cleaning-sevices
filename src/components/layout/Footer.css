@@ -13,9 +13,50 @@
 }
 
 .footer-brand .nav-logo {
-    color: white;
-    display: inline-flex;
-    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    margin-bottom: 2rem;
+}
+
+.footer-brand .logo-wrapper {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: white;
+    border: 3px solid var(--secondary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+}
+
+.footer-brand .logo-wrapper img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.footer-brand .brand-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand .brand-name .text-secondary {
+    font-size: 2.25rem;
+    line-height: 1;
+}
+
+.footer-brand .brand-name span:not(.text-secondary) {
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .footer-brand .text-muted {

@@ -114,9 +114,20 @@ const Dashboard = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="glass-panel text-center p-8">
-                                    <p className="text-muted">No upcoming bookings scheduled.</p>
-                                </div>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="glass-panel text-center p-12 flex flex-col items-center gap-4"
+                                >
+                                    <div className="p-4 bg-gray-50 rounded-full">
+                                        <FiCalendar size={32} className="text-muted" />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold">No upcoming bookings</h4>
+                                        <p className="text-muted text-sm">Schedule your next cleaning session today!</p>
+                                    </div>
+                                    <a href="/book" className="btn btn-primary btn-sm">Book a Service</a>
+                                </motion.div>
                             )}
                         </section>
 
@@ -270,10 +281,17 @@ const Dashboard = () => {
                     </div>
                     <div className="dashboard-header-right flex items-center gap-6">
                         {/* Notifications Popover Placeholder */}
-                        <div className="notifications-bell relative cursor-pointer p-2 glass-panel rounded-full">
+                        <motion.div
+                            className="notifications-bell relative cursor-pointer p-2 glass-panel rounded-full"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            initial={{ rotate: -10 }}
+                            animate={{ rotate: [10, -10, 10, 0] }}
+                            transition={{ delay: 0.5, duration: 0.5 }}
+                        >
                             <FiBell size={20} />
                             <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
-                        </div>
+                        </motion.div>
                         <div className="dashboard-actions">
                             <a href="/book" className="btn btn-primary">Book New Service</a>
                         </div>

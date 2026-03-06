@@ -64,13 +64,15 @@
 /* Active State for Progress Tracker */
 .progress-step.active .step-circle {
     background: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--secondary);
     color: white;
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+    transform: scale(1.1);
 }
 
 .progress-step.active .step-label {
     color: var(--primary);
+    font-weight: 700;
 }
 
 .progress-step.active .step-line {
@@ -112,8 +114,18 @@
 
 .service-option.selected {
     border-color: var(--secondary);
-    background: rgba(0, 212, 255, 0.05);
-    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.1);
+    background: white;
+    box-shadow: 0 8px 16px rgba(0, 212, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.service-option.selected .option-text {
+    color: var(--primary);
+}
+
+.service-option .check-icon {
+    font-size: 1.5rem;
+    color: var(--secondary);
 }
 
 .option-text {

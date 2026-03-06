@@ -65,7 +65,7 @@ const HowItWorks = () => {
                     transition={{ duration: 0.6, delay: 0.4 }}
                 >
                     <div className="wcu-content">
-                        <h2 className="mb-4">Why Choose Sapphire?</h2>
+                        <h2 className="mb-4">Why Choose Sapphire Sparks?</h2>
                         <p className="mb-6 text-gray-300">
                             Our commitment to excellence and attention to detail ensures your space is not just clean, but truly sparkling.
                             We use high-quality, eco-friendly products and trained professionals to deliver a premium service every time.
