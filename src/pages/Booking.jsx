@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCheckCircle } from 'react-icons/fi';
+import { FiCheckCircle, FiLoader, FiAlertCircle, FiCreditCard, FiInfo, FiArrowRight } from 'react-icons/fi';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore';
+import { useAuth } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import PaystackIntegration from '../components/payments/PaystackIntegration';
 import './Booking.css';
 
 const Booking = () => {
@@ -17,6 +22,12 @@ const Booking = () => {
         address: ''
     });
     const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
+    const [bookingId, setBookingId] = useState(null);
+    const [paymentStatus, setPaymentStatus] = useState('pending'); // pending, success
+    const { currentUser } = useAuth();
+    const navigate = useNavigate();
 
     const validateStep = (currentStep) => {
         let newErrors = {};
@@ -49,10 +60,45 @@ const Booking = () => {
     };
     const prevStep = () => setStep(step - 1);
 
-    const submitBooking = (e) => {
+    const submitBooking = async (e) => {
         e.preventDefault();
-        // In a real app, this would send data to an API
-        setStep(4); // Success step
+
+        try {
+            setIsSubmitting(true);
+            setSubmitError('');
+
+            const bookingData = {
+                ...formData,
+                userId: currentUser ? currentUser.uid : 'anonymous',
+                status: 'pending',
+                paymentStatus: 'pending',
+                createdAt: serverTimestamp()
+            };
+
+            const docRef = await addDoc(collection(db, 'bookings'), bookingData);
+            setBookingId(docRef.id);
+            setStep(4); // Move to payment step
+        } catch (err) {
+            console.error("Error adding booking: ", err);
+            setSubmitError('Failed to submit booking. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handlePaymentSuccess = async (reference) => {
+        setPaymentStatus('success');
+        try {
+            const bookingRef = doc(db, "bookings", bookingId);
+            await updateDoc(bookingRef, {
+                paymentStatus: 'paid',
+                paymentReference: reference.reference,
+                paidAt: serverTimestamp(),
+                status: 'confirmed'
+            });
+        } catch (err) {
+            console.error("Error updating payment status:", err);
+        }
     };
 
     return (
@@ -281,13 +327,33 @@ const Booking = () => {
                                     </div>
                                 </div>
 
-                                <div className="payment-notice mt-4 text-sm text-muted">
-                                    * Payment is collected securely after the service is completed. No charge today.
+                                <div className="payment-notice mt-4 text-sm text-secondary bg-secondary/5 p-4 rounded-xl border border-secondary/10 flex items-start gap-3">
+                                    <FiInfo className="mt-1 flex-shrink-0" />
+                                    <div>
+                                        <p className="font-bold">Instant Confirmation</p>
+                                        <p>Pay now to lock in your slot and get 5% off future cleanings. Payment is secured by Paystack.</p>
+                                    </div>
                                 </div>
 
+                                {submitError && (
+                                    <div className="error-alert p-3 bg-red-50 text-red-600 rounded-lg mb-4 text-sm flex items-center gap-2">
+                                        <FiAlertCircle /> {submitError}
+                                    </div>
+                                )}
+
                                 <div className="form-actions mt-8 flex justify-between">
-                                    <button className="btn btn-outline" onClick={prevStep}>Edit Details</button>
-                                    <button className="btn btn-primary" onClick={submitBooking}>Confirm Booking</button>
+                                    <button className="btn btn-outline" onClick={prevStep} disabled={isSubmitting}>Edit Details</button>
+                                    <button
+                                        className="btn btn-primary flex items-center gap-2"
+                                        onClick={submitBooking}
+                                        disabled={isSubmitting}
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <FiLoader className="animate-spin" /> Confirming...
+                                            </>
+                                        ) : 'Confirm Booking'}
+                                    </button>
                                 </div>
                             </motion.div>
                         )}
@@ -300,15 +366,65 @@ const Booking = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="form-step text-center py-8"
                             >
-                                <div className="success-icon-wrapper mx-auto mb-6">
-                                    <FiCheckCircle size={64} className="text-secondary" />
-                                </div>
-                                <h2 className="mb-4">Booking Confirmed!</h2>
-                                <p className="text-muted mb-8">
-                                    Thank you, {formData.name.split(' ')[0]}! We've sent a confirmation email to {formData.email}.
-                                    Our team will see you on {formData.date}.
-                                </p>
-                                <a href="/" className="btn btn-outline mx-auto">Return Home</a>
+                                {paymentStatus === 'success' ? (
+                                    <>
+                                        <div className="success-icon-wrapper mx-auto mb-6 bg-green-500 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg shadow-green-100">
+                                            <FiCheckCircle size={40} />
+                                        </div>
+                                        <h2 className="mb-4 text-3xl font-bold">Booking Confirmed!</h2>
+                                        <p className="text-muted mb-8 text-lg">
+                                            Thank you, {formData.name.split(' ')[0]}! Your payment was successful and your slot is officially locked in.
+                                        </p>
+                                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                            <Link to="/dashboard" className="btn btn-primary px-8">Go to Dashboard</Link>
+                                            <button onClick={() => window.print()} className="btn btn-outline">Print Receipt</button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="payment-icon-wrapper mx-auto mb-6 bg-primary/10 text-primary w-20 h-20 rounded-full flex items-center justify-center">
+                                            <FiCreditCard size={40} />
+                                        </div>
+                                        <h2 className="mb-4 text-3xl font-bold">Secure Your Slot</h2>
+                                        <p className="text-muted mb-8 leading-relaxed max-w-md mx-auto">
+                                            Your details are saved! Now, simply complete the payment to finalize your booking with Sapphire Sparks.
+                                        </p>
+
+                                        <div className="max-w-xs mx-auto mb-8">
+                                            <div className="glass-panel p-4 text-left border border-slate-100 mb-6">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-sm text-muted">Service Total</span>
+                                                    <span className="font-bold text-xl">$150.00</span>
+                                                </div>
+                                                <div className="text-xs text-muted flex items-center gap-1">
+                                                    <FiCheckCircle className="text-green-500" /> Professional Grade Equipment
+                                                </div>
+                                            </div>
+
+                                            <PaystackIntegration
+                                                email={currentUser?.email || formData.email}
+                                                amount={150}
+                                                metadata={{
+                                                    bookingId,
+                                                    serviceType: formData.serviceType
+                                                }}
+                                                onSuccess={handlePaymentSuccess}
+                                                buttonText="Pay & Confirm Now"
+                                            />
+
+                                            <button
+                                                onClick={() => navigate('/dashboard')}
+                                                className="text-muted text-sm mt-4 hover:text-primary transition-all flex items-center justify-center gap-2 w-full"
+                                            >
+                                                Pay Later in Dashboard <FiArrowRight />
+                                            </button>
+                                        </div>
+
+                                        <p className="text-xs text-muted flex items-center justify-center gap-1 mt-4">
+                                            <FiInfo /> Card details are encrypted and never stored on our servers.
+                                        </p>
+                                    </>
+                                )}
                             </motion.div>
                         )}
 

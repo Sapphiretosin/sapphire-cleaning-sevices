@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiCheckCircle } from 'react-icons/fi';
+import { FiCheckCircle, FiShield, FiStar, FiHeart } from 'react-icons/fi';
 import './Hero.css';
 
 const Hero = () => {
@@ -58,6 +58,24 @@ const Hero = () => {
                         <Link to="/services" className="btn btn-outline btn-lg">
                             Explore Services
                         </Link>
+                    </motion.div>
+
+                    <motion.div
+                        className="hero-trust-badges flex gap-6 mt-16"
+                        variants={itemVariants}
+                    >
+                        <div className="trust-badge flex items-center gap-2">
+                            <FiStar className="text-secondary" />
+                            <span>1000+ Happy Clients</span>
+                        </div>
+                        <div className="trust-badge flex items-center gap-2">
+                            <FiShield className="text-secondary" />
+                            <span>Fully Insured & Bonded</span>
+                        </div>
+                        <div className="trust-badge flex items-center gap-2">
+                            <FiHeart className="text-secondary" />
+                            <span>Eco-Friendly Products</span>
+                        </div>
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="hero-stats">

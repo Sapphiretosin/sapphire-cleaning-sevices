@@ -33,6 +33,25 @@
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F172A;
+    /* Slate 900 */
+    --surface: #1E293B;
+    /* Slate 800 */
+    --surface-glass: rgba(30, 41, 59, 0.7);
+    --text-main: #F1F5F9;
+    /* Slate 100 */
+    --text-muted: #94A3B8;
+    /* Slate 400 */
+    --border: #334155;
+    /* Slate 700 */
+    --primary: #38BDF8;
+    /* Sky 400 - more legible in dark mode */
+    --primary-light: #0EA5E9;
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

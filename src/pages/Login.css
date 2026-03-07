@@ -1,0 +1,22 @@
+.login-page {
+    min-height: 80vh;
+}
+
+.login-card {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.input-group label {
+    color: var(--text-dark);
+}
+
+.error-alert {
+    font-size: 0.875rem;
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

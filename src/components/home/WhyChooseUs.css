@@ -1,0 +1,26 @@
+.why-choose-us .icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.text-blue {
+    color: #3b82f6;
+}
+
+.text-yellow {
+    color: #eab308;
+}
+
+.text-green {
+    color: #10b981;
+}
+
+.text-secondary {
+    color: #ec4899;
+}

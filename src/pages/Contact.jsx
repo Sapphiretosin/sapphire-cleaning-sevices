@@ -27,16 +27,30 @@ const Contact = () => {
     });
 
     const [status, setStatus] = useState('idle'); // idle, submitting, success
+    const [errors, setErrors] = useState({});
 
     // Service center location: Ado Ekiti, Nigeria
     const position = [7.65, 5.27];
 
+    const validate = () => {
+        let newErrors = {};
+        if (!formData.name.trim()) newErrors.name = 'Full name is required.';
+        if (!formData.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) newErrors.email = 'Please enter a valid email.';
+        if (!formData.subject.trim()) newErrors.subject = 'Subject is required.';
+        if (!formData.message.trim()) newErrors.message = 'Message cannot be empty.';
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        if (errors[name]) setErrors({ ...errors, [name]: '' });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!validate()) return;
         setStatus('submitting');
 
         // Simulate API call

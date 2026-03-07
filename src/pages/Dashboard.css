@@ -293,6 +293,23 @@
     background: rgba(239, 68, 68, 0.02);
 }
 
+/* Spotlight Banner */
+.spotlight-banner {
+    border-left: 5px solid #F59E0B;
+}
+
+.badge-spotlight {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #F59E0B;
+    color: white;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 @media (max-width: 1024px) {
     .dashboard-grid {
         grid-template-columns: 1fr;

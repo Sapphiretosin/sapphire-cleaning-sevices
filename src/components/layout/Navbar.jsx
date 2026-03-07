@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi';
+import { useAuth } from '../../context/AuthContext';
 import { IoDiamondOutline } from 'react-icons/io5';
 import logo from '../../assets/logo.png';
 import './Navbar.css';
@@ -8,7 +9,24 @@ import './Navbar.css';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const { currentUser, logout, userData } = useAuth();
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const getDashboardLink = () => {
+        if (userData?.role === 'admin') return '/admin';
+        if (userData?.role === 'employee') return '/employee';
+        return '/dashboard';
+    };
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/login');
+        } catch (error) {
+            console.error("Failed to log out", error);
+        }
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -46,7 +64,23 @@ const Navbar = () => {
                     <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
                     <a href="/#about">How it Works</a>
                     <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
-                    <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active' : ''}>Dashboard</Link>
+
+                    {currentUser && (
+                        <Link to={getDashboardLink()} className={location.pathname === getDashboardLink() ? 'active' : ''}>
+                            {userData?.role === 'admin' ? 'Admin Panel' : userData?.role === 'employee' ? 'Staff Portal' : 'My Account'}
+                        </Link>
+                    )}
+
+                    {!currentUser && (
+                        <Link to="/login" className={location.pathname === '/login' ? 'active' : ''}>Login</Link>
+                    )}
+
+                    {currentUser && (
+                        <button onClick={handleLogout} className="flex items-center gap-2 text-red-500 hover:text-red-600 transition-colors ml-4">
+                            <FiLogOut /> Logout
+                        </button>
+                    )}
+
                     <Link to="/book" className="btn btn-primary ml-4">Book Now</Link>
                 </div>
 
@@ -67,7 +101,16 @@ const Navbar = () => {
                     <Link to="/about">About</Link>
                     <a href="/#about">How it Works</a>
                     <Link to="/contact">Contact</Link>
-                    <Link to="/dashboard">Dashboard</Link>
+                    {currentUser ? (
+                        <>
+                            <Link to={getDashboardLink()}>{userData?.role === 'admin' ? 'Admin Panel' : userData?.role === 'employee' ? 'Staff Portal' : 'My Account'}</Link>
+                            <button onClick={handleLogout} className="flex items-center gap-2 text-red-500 w-full p-4">
+                                <FiLogOut /> Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link to="/login">Login</Link>
+                    )}
                     <Link to="/book" className="btn btn-primary mt-4">Book Now</Link>
                 </div>
             </div>
