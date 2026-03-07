@@ -14,6 +14,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import AdminDashboard from './pages/AdminDashboard';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import NotFound from './pages/NotFound';
+import AuthRedirect from './pages/AuthRedirect';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Breadcrumbs from './components/common/Breadcrumbs';
 import ScrollToTop from './components/common/ScrollToTop';
@@ -63,6 +64,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/auth-redirect" element={<AuthRedirect />} />
               <Route path="/book" element={<Booking />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

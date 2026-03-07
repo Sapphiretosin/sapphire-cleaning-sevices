@@ -11,108 +11,108 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useAuth();
+    const { login, userData } = useAuth();
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
-
         try {
             setError('');
             setLoading(true);
-            await login(email, password);
-            navigate('/dashboard');
+            const result = await login(email, password);
+            // Read role from Firestore via a quick getDocs call
+            // The AuthContext snapshot may not have updated by navigate time,
+            // so we check the Firebase user and let ProtectedRoute handle the rest.
+            // Role-based redirect: the ProtectedRoute will enforce, but for UX
+            // we use the userData already in context if available.
+            navigate('/auth-redirect');
         } catch (err) {
-            setError('Failed to log in: ' + (err.message || 'Incorrect email or password'));
+            setError('Incorrect email or password. Please try again.');
         } finally {
             setLoading(false);
         }
     }
 
     return (
-        <div className="login-page pt-32 pb-20 container flex justify-center items-center">
-            <motion.div
-                className="glass-panel login-card max-w-md w-full p-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-                    <p className="text-muted">Sign in to manage your cleaning appointments</p>
-                </div>
+        <div className="auth-split-page">
+            {/* Left brand panel */}
+            <div className="auth-brand-panel">
+                <div className="auth-brand-logo">Sapphire <span>Sparks</span></div>
+                <h2 className="auth-brand-tagline">
+                    Clean spaces,<br /><em>happy faces.</em>
+                </h2>
+                <p className="auth-brand-sub">
+                    Premium cleaning services delivered with care. Sign in to manage your bookings, track loyalty rewards, and more.
+                </p>
+            </div>
 
-                {error && (
-                    <motion.div
-                        className="error-alert flex items-center gap-3 p-4 bg-red-50 border border-red-100 rounded-lg text-red-600 mb-6"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                    >
-                        <FiAlertCircle />
-                        <span>{error}</span>
-                    </motion.div>
-                )}
+            {/* Right form panel */}
+            <div className="auth-form-panel">
+                <motion.div
+                    className="auth-form-inner"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                >
+                    <h1 className="auth-form-title">Welcome back</h1>
+                    <p className="auth-form-subtitle">Sign in to your Sapphire Sparks account</p>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="input-group">
-                        <label className="text-sm font-medium mb-2 block">Email Address</label>
-                        <div className="relative">
-                            <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+                    {error && (
+                        <motion.div
+                            className="auth-error"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                        >
+                            <FiAlertCircle /> {error}
+                        </motion.div>
+                    )}
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="auth-input-wrap">
+                            <label>Email Address</label>
+                            <FiMail className="input-icon" />
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full pl-12 pr-4 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 placeholder="name@example.com"
                                 required
                             />
                         </div>
-                    </div>
 
-                    <div className="input-group">
-                        <div className="flex justify-between items-center mb-2">
-                            <label className="text-sm font-medium">Password</label>
-                            <Link to="/forgot-password" size="xs" className="text-primary text-xs font-bold hover:underline">Forgot Password?</Link>
-                        </div>
-                        <div className="relative">
-                            <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+                        <div className="auth-input-wrap">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <label style={{ marginBottom: 0 }}>Password</label>
+                                <Link to="/forgot-password" className="auth-forgot">Forgot?</Link>
+                            </div>
+                            <FiLock className="input-icon" style={{ bottom: '0.85rem' }} />
                             <input
-                                type={showPassword ? "text" : "password"}
+                                type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full pl-12 pr-12 py-3 bg-white/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 placeholder="••••••••"
                                 required
+                                style={{ paddingRight: '3rem' }}
                             />
-                            <button
-                                type="button"
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted hover:text-primary transition-colors"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
+                            <button type="button" className="auth-eye-btn" onClick={() => setShowPassword(!showPassword)}>
                                 {showPassword ? <FiEyeOff /> : <FiEye />}
                             </button>
                         </div>
-                    </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="btn btn-primary w-full py-4 flex items-center justify-center gap-2 text-lg"
-                    >
-                        {loading ? 'Logging in...' : (
-                            <>
-                                Sign In <FiArrowRight />
-                            </>
-                        )}
-                    </button>
-                </form>
+                        <button type="submit" className="auth-submit-btn" disabled={loading}>
+                            {loading ? 'Signing in...' : <><span>Sign In</span> <FiArrowRight /></>}
+                        </button>
+                    </form>
 
-                <div className="mt-8 pt-6 border-t border-slate-100 text-center">
-                    <p className="text-muted text-sm">
-                        Don't have an account? <Link to="/signup" className="text-primary font-bold hover:underline">Sign Up</Link>
+                    <p className="auth-footer" style={{ marginTop: '1.25rem' }}>
+                        New to Sapphire Sparks? <Link to="/signup">Create an account</Link>
                     </p>
-                </div>
-            </motion.div>
+
+                    <div className="auth-admin-hint">
+                        <strong>Admin access?</strong> Use your admin email &amp; password to log in — you'll be redirected to the Admin Console automatically.
+                    </div>
+                </motion.div>
+            </div>
         </div>
     );
 };
